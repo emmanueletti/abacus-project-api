@@ -12,14 +12,7 @@ const {
 } = require('../lib/helpers');
 
 // dafault overrides
-// stretch: use province specific default values vs canada wide
 // provide link to get tax rate: https://www.wealthsimple.com/en-ca/learn/canadian-property-taxes
-
-//
-
-// take value of home considering
-// multiply by costs then divide by 12
-// get total of  monthly unrecoverable costs
 
 module.exports = function () {
   router.post('/', (req, res) => {
