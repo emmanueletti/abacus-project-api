@@ -37,8 +37,10 @@ module.exports = function () {
     const amountLostToFees =
       finalInvestmentAmountWithOutFees - finalInvestmentAmountWithFees;
 
-    const percentageLostToFees =
-      (amountLostToFees / finalInvestmentAmountWithOutFees) * 100;
+    const percentageLostToFees = `${(
+      (amountLostToFees / finalInvestmentAmountWithOutFees) *
+      100
+    ).toFixed(2)}%`;
 
     res.json({
       finalInvestmentAmountWithOutFees,
