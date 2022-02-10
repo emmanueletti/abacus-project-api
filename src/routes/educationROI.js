@@ -1,5 +1,5 @@
 /**
- * Routing logic for pay over tuition calculation
+ * Routing logic for education return on invesment calculation
  */
 
 const express = require('express');

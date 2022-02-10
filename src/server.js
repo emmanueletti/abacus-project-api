@@ -11,11 +11,15 @@ app.use(express.json());
 
 // Import routes
 const investmentFeesRoutes = require('./routes/investmentFees');
-const payOverTuitionRoutes = require('./routes/payOverTuiton');
+const educationROIRoutes = require('./routes/educationROI');
+const investmentVehicleRoutes = require('./routes/investmentVehicle');
+const rentOrBuyRoutes = require('./routes/rentOrBuy');
 
 // Mount routes
 app.use('/api/investment-fees', investmentFeesRoutes());
-app.use('/api/pay-over-tuition', payOverTuitionRoutes());
+app.use('/api/education-roi', educationROIRoutes());
+app.use('/api/investment-vehicle', investmentVehicleRoutes());
+app.use('/api/rent-or-buy', rentOrBuyRoutes());
 
 // Start server
 app.listen(PORT, () => {

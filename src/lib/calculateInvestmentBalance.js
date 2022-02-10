@@ -1,4 +1,6 @@
-const constants = require('../lib/constants');
+const { NUM_TIMES_COMPOUNDED_PER_UNIT_TIME } = require('../lib/constants');
+
+// refactor to use compound interst helper
 
 module.exports = function (...args) {
   const [
@@ -15,11 +17,10 @@ module.exports = function (...args) {
   const annualInterestRateDeci = annualInterestRate / 100;
 
   // (1 + r/n)
-  const a =
-    1 + annualInterestRateDeci / constants.NUM_TIMES_COMPOUNDED_PER_UNIT_TIME;
+  const a = 1 + annualInterestRateDeci / NUM_TIMES_COMPOUNDED_PER_UNIT_TIME;
 
   // (nt)
-  const b = constants.NUM_TIMES_COMPOUNDED_PER_UNIT_TIME * totalInvestmentTime;
+  const b = NUM_TIMES_COMPOUNDED_PER_UNIT_TIME * totalInvestmentTime;
 
   // (a)(b)
   const c = a ** b;
@@ -30,8 +31,7 @@ module.exports = function (...args) {
   // Future value of a series formula
   // MonthlyContributions × {[(1 + r/n)(nt) - 1] / (r/n)}
   const d =
-    (c - 1) /
-    (annualInterestRateDeci / constants.NUM_TIMES_COMPOUNDED_PER_UNIT_TIME);
+    (c - 1) / (annualInterestRateDeci / NUM_TIMES_COMPOUNDED_PER_UNIT_TIME);
 
   const FutureValueOfSeries = monthlyContributions * d;
 
