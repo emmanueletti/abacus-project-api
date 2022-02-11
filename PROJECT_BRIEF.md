@@ -44,4 +44,4 @@ An API of personal finance calculators.
 [] TESTS!
 [x] documentation
 [] scalability (rate limiting, load balancing)
-[] cleanup
+[] cleanup (MVC structure)
