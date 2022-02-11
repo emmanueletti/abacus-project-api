@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/tachyons@4.12.0/css/tachyons.min.css"
+    />
+    <link rel="stylesheet" href="/styles/index.css" />
+    <title>Abacus Project</title>
+  </head>
+  <body>
+    <%- include ('partials/_nav') %>
+
+    <main class="pv4 container">
+      <!-- Results -->
+      <article class="pa1 pa3-ns" data-name="slab-stat-small">
+        <h3 class="f6 ttu tracked">Results</h3>
+        <div class="cf">
+          <dl class="fl fn-l w-50 dib-l w-auto-l lh-title mr5-l">
+            <dd class="f6 fw4 ml0">Investment Vehicle</dd>
+            <dd id="investmentVehicle" class="f3 fw6 ml0">-</dd>
+          </dl>
+          <dl class="fl fn-l w-50 dib-l w-auto-l lh-title mr5-l">
+            <dd class="f6 fw4 ml0">Amount To Contribute</dd>
+            <dd id="amountToContribute" class="f3 fw6 ml0">-</dd>
+          </dl>
+        </div>
+      </article>
+
+      <!-- Form -->
+      <form>
+        <div class="mt3">
+          <label class="db fw6 lh-copy f6" for="annual-income">
+            Annual Income
+          </label>
+          <input
+            class="pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100"
+            type="number"
+            name="annual-income"
+            id="annual-income"
+            placeholder="40000"
+            value="40000"
+            min="0"
+          />
+        </div>
+        <div class="flex items-center mb2 mt4">
+          <input class="mr2" type="checkbox" id="isPartTime" />
+          <label for="isPartTime" class="lh-copy"
+            >Check, if you've maxed our your TFSA contribution room</label
+          >
+        </div>
+        <div class="flex items-center mb2 mt4">
+          <input class="mr2" type="checkbox" id="isPartTime" />
+          <label for="isPartTime" class="lh-copy"
+            >Check, if you've maxed our your RRSP contribution room</label
+          >
+        </div>
+        <div class="mt3">
+          <input
+            class="b ph3 pv2 input-reset ba b--black bg-transparent grow pointer f6 dib"
+            type="submit"
+            value="Calculate"
+          />
+        </div>
+      </form>
+    </main>
+
+    <script src="/scripts/investmentVehicle.js"></script>
+    <%- include ('partials/_footer') %>
+  </body>
+</html>

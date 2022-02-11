@@ -6,6 +6,7 @@ const express = require('express');
 const router = express.Router();
 
 const { FEDERAL_TAX_BRACKET_TIER_1 } = require('../lib/constants');
+const formatNumToDollarString = require('../lib/formatNumToDollarString');
 
 module.exports = function () {
   router.post('/', (req, res) => {
@@ -14,40 +15,39 @@ module.exports = function () {
 
     if (isTFSAContributionMaxed && !isRRSPContributionMaxed) {
       return res.json({
-        vehicle: 'RRSP',
-        amount: 'till contribution room is maxed',
-        then: 'Non-Registered / Non-Tax-Advantaged Investment Account',
+        investmentVehicle: 'RRSP',
+        amountToContribute: 'till contribution room is maxed',
       });
     }
 
     if (!isTFSAContributionMaxed && isRRSPContributionMaxed) {
       return res.json({
-        vehicle: 'TFSA',
-        amount: 'Till contribution room is maxed',
-        then: 'Non-Registered / Non-Tax Advantaged Investment Account',
+        investmentVehicle: 'TFSA',
+        amountToContribute: 'Till contribution room is maxed',
       });
     }
 
     if (isTFSAContributionMaxed && isRRSPContributionMaxed) {
       return res.json({
-        vehicle: 'Non-Registered / Non-Tax Advantaged Investment Account',
-        amount: 'As much as possible',
+        investmentVehicle:
+          'Non-Registered / Non-Tax Advantaged Investment Account',
+        amountToContribute: 'As much as possible',
       });
     }
 
     if (annualIncome > FEDERAL_TAX_BRACKET_TIER_1) {
       const amountForRRSP = annualIncome - FEDERAL_TAX_BRACKET_TIER_1;
       return res.json({
-        vehicle: 'RRSP',
-        amount: `Contribute at most ${amountForRRSP} without going past max RRSP contribution room`,
-        then: 'TFSA',
+        investmentVehicle: 'RRSP',
+        amountToContribute: `Contribute at most ${formatNumToDollarString(
+          amountForRRSP
+        )} without going past max RRSP contribution room`,
       });
     }
 
     res.json({
-      vehicle: 'TFSA',
-      amount: 'Till contribution room is maxed',
-      then: 'RRSP',
+      investmentVehicle: 'TFSA',
+      amountToContribute: 'Till contribution room is maxed',
     });
   });
 

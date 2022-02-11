@@ -6,6 +6,7 @@ const express = require('express');
 const router = express.Router();
 
 const calculateInvestmentBalance = require('../lib/calculateInvestmentBalance');
+const formatNumToDollarString = require('../lib/formatNumToDollarString');
 
 module.exports = function () {
   router.post('/', (req, res) => {
@@ -43,9 +44,13 @@ module.exports = function () {
     ).toFixed(2)}%`;
 
     res.json({
-      finalInvestmentAmountWithOutFees,
-      finalInvestmentAmountWithFees,
-      amountLostToFees,
+      finalInvestmentAmountWithOutFees: formatNumToDollarString(
+        finalInvestmentAmountWithOutFees
+      ),
+      finalInvestmentAmountWithFees: formatNumToDollarString(
+        finalInvestmentAmountWithFees
+      ),
+      amountLostToFees: formatNumToDollarString(amountLostToFees),
       percentageLostToFees,
     });
   });

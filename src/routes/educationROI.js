@@ -5,6 +5,8 @@
 const express = require('express');
 const router = express.Router();
 
+const formatNumToDollarString = require('../lib/formatNumToDollarString');
+
 module.exports = function () {
   router.post('/', (req, res) => {
     const {
@@ -28,7 +30,7 @@ module.exports = function () {
     const returnOnInvestmentPercentage = (
       (increaseInSalary / educationCost) *
       100
-    ).toFixed(2);
+    ).toFixed(1);
 
     const yearsForEducationToPayForItself = (
       educationCost / increaseInSalary
@@ -37,9 +39,9 @@ module.exports = function () {
     console.log(yearsForEducationToPayForItself);
 
     res.json({
-      increaseInSalary,
-      returnOnInvestmentPercentage,
-      yearsForEducationToPayForItself,
+      increaseInSalary: formatNumToDollarString(increaseInSalary),
+      returnOnInvestmentPercentage: `${returnOnInvestmentPercentage}%`,
+      yearsForEducationToPayForItself: `${yearsForEducationToPayForItself} Years`,
     });
   });
   return router;

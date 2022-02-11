@@ -32,8 +32,14 @@ app.use('/api/investment-vehicle', investmentVehicleRoutes());
 app.use('/api/rent-or-buy', rentOrBuyRoutes());
 
 // View Routes
-app.get('/investment-fees/new', (req, res) => {
-  res.render('investment-fees_new.ejs');
+app.get('/investment-fees', (req, res) => {
+  res.render('investment-fees.ejs');
+});
+app.get('/education-roi', (req, res) => {
+  res.render('education-roi.ejs');
+});
+app.get('/investment-vehicle', (req, res) => {
+  res.render('investment-vehicle.ejs');
 });
 
 app.get('/', (req, res) => {

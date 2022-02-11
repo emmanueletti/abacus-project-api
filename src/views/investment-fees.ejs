@@ -21,19 +21,20 @@
         <div class="cf">
           <dl class="fl fn-l w-50 dib-l w-auto-l lh-title mr5-l">
             <dd class="f6 fw4 ml0">Final Amount Without Fees</dd>
-            <dd id="finalAmoutWithoutFees" class="f3 fw6 ml0">$1,000,000</dd>
-          </dl>
-          <dl class="fl fn-l w-50 dib-l w-auto-l lh-title mr5-l">
-            <dd class="f6 fw4 ml0">Final Amount After Fees</dd>
-            <dd id="finalAmoutWithFees" class="f3 fw6 ml0">$1,000,000</dd>
+            <dd id="finalAmoutWithoutFees" class="f3 fw6 ml0">$0</dd>
           </dl>
           <dl class="fl fn-l w-50 dib-l w-auto-l lh-title mr5-l">
             <dd class="f6 fw4 ml0">Amount Lost To Fees</dd>
-            <dd id="amountLostToFees" class="f3 fw6 ml0">$1,000,000</dd>
+            <dd id="amountLostToFees" class="f3 fw6 ml0">$0</dd>
           </dl>
           <dl class="fl fn-l w-50 dib-l w-auto-l lh-title mr5-l">
+            <dd class="f6 fw4 ml0">Final Amount After Fees</dd>
+            <dd id="finalAmoutWithFees" class="f3 fw6 ml0">$0</dd>
+          </dl>
+
+          <dl class="fl fn-l w-50 dib-l w-auto-l lh-title mr5-l">
             <dd class="f6 fw4 ml0">Percentage Lost To Fees</dd>
-            <dd id="percentageLostToFees" class="f3 fw6 ml0">100%</dd>
+            <dd id="percentageLostToFees" class="f3 fw6 ml0">0%</dd>
           </dl>
         </div>
       </article>
@@ -86,6 +87,7 @@
           <input
             class="pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100"
             type="number"
+            step="0.01"
             name="portfolio-fees"
             id="portfolio-fees"
             placeholder="2"
