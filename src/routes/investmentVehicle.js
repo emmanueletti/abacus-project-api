@@ -13,6 +13,16 @@ module.exports = function () {
     const { annualIncome, isTFSAContributionMaxed, isRRSPContributionMaxed } =
       req.body;
 
+    if (annualIncome > FEDERAL_TAX_BRACKET_TIER_1 && !isRRSPContributionMaxed) {
+      const amountForRRSP = annualIncome - FEDERAL_TAX_BRACKET_TIER_1;
+      return res.json({
+        investmentVehicle: 'RRSP',
+        amountToContribute: `Contribute at most ${formatNumToDollarString(
+          amountForRRSP
+        )} without going past max RRSP contribution room`,
+      });
+    }
+
     if (isTFSAContributionMaxed && !isRRSPContributionMaxed) {
       return res.json({
         investmentVehicle: 'RRSP',
@@ -32,16 +42,6 @@ module.exports = function () {
         investmentVehicle:
           'Non-Registered / Non-Tax Advantaged Investment Account',
         amountToContribute: 'As much as possible',
-      });
-    }
-
-    if (annualIncome > FEDERAL_TAX_BRACKET_TIER_1) {
-      const amountForRRSP = annualIncome - FEDERAL_TAX_BRACKET_TIER_1;
-      return res.json({
-        investmentVehicle: 'RRSP',
-        amountToContribute: `Contribute at most ${formatNumToDollarString(
-          amountForRRSP
-        )} without going past max RRSP contribution room`,
       });
     }
 

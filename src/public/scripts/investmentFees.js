@@ -25,7 +25,7 @@ form.addEventListener('submit', (e) => {
     retirementAge,
   };
 
-  const response = fetch('/api/investment-fees', {
+  fetch('/api/investment-fees', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',

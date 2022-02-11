@@ -20,12 +20,7 @@
         <h3 class="f6 ttu tracked">Results</h3>
         <div class="cf">
           <dl class="fl fn-l w-50 dib-l w-auto-l lh-title mr5-l">
-            <dd class="f6 fw4 ml0">Investment Vehicle</dd>
-            <dd id="investmentVehicle" class="f3 fw6 ml0">-</dd>
-          </dl>
-          <dl class="fl fn-l w-50 dib-l w-auto-l lh-title mr5-l">
-            <dd class="f6 fw4 ml0">Amount To Contribute</dd>
-            <dd id="amountToContribute" class="f3 fw6 ml0">-</dd>
+            <dd id="summary" class="f3 fw6 ml0">-</dd>
           </dl>
         </div>
       </article>
@@ -33,29 +28,22 @@
       <!-- Form -->
       <form>
         <div class="mt3">
-          <label class="db fw6 lh-copy f6" for="annual-income">
-            Annual Income
-          </label>
+          <label class="db fw6 lh-copy f6" for="home-price"> Home Price </label>
           <input
             class="pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100"
             type="number"
-            name="annual-income"
-            id="annual-income"
-            placeholder="40000"
-            value="40000"
+            name="home-price"
+            id="home-price"
+            placeholder="400000"
+            value="400000"
             min="0"
           />
         </div>
         <div class="flex items-center mb2 mt4">
-          <input class="mr2" type="checkbox" id="isTFSAMaxed" />
-          <label for="isTFSAMaxed" class="lh-copy"
-            >Check, if you've maxed out your TFSA contribution room</label
-          >
-        </div>
-        <div class="flex items-center mb2 mt4">
-          <input class="mr2" type="checkbox" id="isRRSPMaxed" />
-          <label for="isRRSPMaxed" class="lh-copy"
-            >Check, if you've maxed out your RRSP contribution room</label
+          <input class="mr2" type="checkbox" id="isPartTime" />
+          <label for="isPartTime" class="lh-copy"
+            >Check, if you've maxed out your TFSA or RRSP contribution
+            roomS</label
           >
         </div>
         <div class="mt3">
@@ -66,9 +54,14 @@
           />
         </div>
       </form>
+      <div class="mt4">
+        <a href="https://www.youtube.com/watch?v=Uwl3-jBNEd4" target="_blank"
+          >Reference</a
+        >
+      </div>
     </main>
 
-    <script src="/scripts/investmentVehicle.js"></script>
+    <script src="/scripts/rentOrBuy.js"></script>
     <%- include ('partials/_footer') %>
   </body>
 </html>

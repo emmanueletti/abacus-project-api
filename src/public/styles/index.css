@@ -6,6 +6,7 @@ html {
   margin: 0;
   padding: 0;
   background-color: var(--near-black);
+  scroll-behavior: smooth;
 }
 
 body {
@@ -43,7 +44,7 @@ form {
 }
 
 .calculator-card {
-  height: 200px;
+  height: 250px;
   background-color: var(--near-black);
   color: whitesmoke;
   border-radius: 2px;

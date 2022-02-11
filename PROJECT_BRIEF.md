@@ -4,8 +4,7 @@ An API of personal finance calculators.
 
 ## User Stories
 
-- as a Canadian user I want to have a set of helpful calculators to help guide my decision making on a set of common financial situations
-- as a front end developerr, I want a simple API to calculator basic user personal finance situations and return a JSON response to be displayed
+- as a front end developer, I want a simple API to calculator basic user personal finance situations
 
 ## Constraints
 
@@ -36,3 +35,10 @@ An API of personal finance calculators.
 ## Improvement
 
 ## To Do
+
+[] security (POSTS vs GET)
+[] api validation
+[] helpful error handling
+[] documentation
+[] scalability (rate limiting, load balancing)
+[] cleanup

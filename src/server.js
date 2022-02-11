@@ -41,6 +41,9 @@ app.get('/education-roi', (req, res) => {
 app.get('/investment-vehicle', (req, res) => {
   res.render('investment-vehicle.ejs');
 });
+app.get('/rent-or-buy', (req, res) => {
+  res.render('rent-or-buy.ejs');
+});
 
 app.get('/', (req, res) => {
   res.render('index');
