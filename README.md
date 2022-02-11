@@ -4,16 +4,12 @@ An API of personal finance calculators.
 
 ## Table of Contents
 
----
-
 1.  [Investment Fees Route](#investment-fees)
 2.  [Education Return On Invesment Route](#education-return-on-investment)
 3.  [Investment Vehicle Route](#investment-vehicle)
 4.  [Rent or Buy Route](#rent-or-buy)
 
 ## Investment Fees
-
----
 
 ```
 POST /api/investment-fees
@@ -82,8 +78,6 @@ Status: 422 Unprocessable Entity
 
 ## Education Return On Investment
 
----
-
 ```
 POST /api/education-roi
 ```
@@ -148,8 +142,6 @@ Status: 422 Unprocessable Entity
 
 ## Investment Vehicle
 
----
-
 ```
 POST /api/investment-vehicle
 ```
@@ -208,8 +200,6 @@ Status: 422 Unprocessable Entity
 [⬆️ Back To Top](#abacus-project)
 
 ## Rent or Buy
-
----
 
 ```
 POST /api/rent-or-buy
