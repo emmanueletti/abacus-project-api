@@ -16,7 +16,7 @@ form.addEventListener('submit', (e) => {
     isRRSPContributionMaxed,
   };
 
-  const response = fetch('/api/investment-vehicle', {
+  fetch('/api/investment-vehicle', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -25,11 +25,10 @@ form.addEventListener('submit', (e) => {
   })
     .then((result) => result.json())
     .then((data) => {
-      if (data.error) {
-        preEl.innerText = JSON.stringify(data, null, 2);
-        return;
+      if (!data.error) {
+        investmentVehicle.textContent = data.investmentVehicle;
+        amountToContribute.textContent = data.amountToContribute;
       }
-      investmentVehicle.textContent = data.investmentVehicle;
-      amountToContribute.textContent = data.amountToContribute;
+      preEl.innerText = JSON.stringify(data, null, 2);
     });
 });

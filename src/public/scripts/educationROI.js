@@ -26,7 +26,7 @@ form.addEventListener('submit', (e) => {
     isPartTime: isPartTime.checked,
   };
 
-  const response = fetch('/api/education-roi', {
+  fetch('/api/education-roi', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -35,13 +35,12 @@ form.addEventListener('submit', (e) => {
   })
     .then((result) => result.json())
     .then((data) => {
-      if (data.error) {
-        preEl.innerText = JSON.stringify(data, null, 2);
-        return;
+      if (!data.error) {
+        increaseInSalary.textContent = data.increaseInSalary;
+        returnOnInvestment.textContent = data.returnOnInvestmentPercentage;
+        yearsForEducationToPayForItself.textContent =
+          data.yearsForEducationToPayForItself;
       }
-      increaseInSalary.textContent = data.increaseInSalary;
-      returnOnInvestment.textContent = data.returnOnInvestmentPercentage;
-      yearsForEducationToPayForItself.textContent =
-        data.yearsForEducationToPayForItself;
+      preEl.innerText = JSON.stringify(data, null, 2);
     });
 });

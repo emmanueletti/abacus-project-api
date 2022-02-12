@@ -1,12 +1,9 @@
 /**
- * Routing logic for investment fees calculation
+ * Controller logic for investmentFees calculator.
  */
 
-const express = require('express');
-const router = express.Router();
-
-const calculateInvestmentBalance = require('../lib/calculateInvestmentBalance');
-const formatNumToDollarString = require('../lib/formatNumToDollarString');
+const formatNumToDollarString = require('../helpers/formatNumToDollarString');
+const calculateInvestmentBalance = require('../helpers/calculateInvestmentBalance');
 
 const investmentFeesValidator = (reqBody) => {
   const result = {
@@ -48,8 +45,8 @@ const investmentFeesValidator = (reqBody) => {
   return result;
 };
 
-module.exports = function () {
-  router.post('/', (req, res) => {
+module.exports = {
+  calculateData: (req, res) => {
     // Validate
     const { isValid, errorMessages } = investmentFeesValidator(req.body);
     if (!isValid) {
@@ -99,7 +96,5 @@ module.exports = function () {
       amountLostToFees: formatNumToDollarString(amountLostToFees),
       percentageLostToFees,
     });
-  });
-
-  return router;
+  },
 };

@@ -8,28 +8,24 @@ var cors = require('cors');
 const app = express();
 const PORT = process.env.PORT || 8080;
 
-// EJS
-// app.set('view engine', 'ejs');
-// app.set('views', path.join(__dirname, './views'));
-app.use(express.static(path.join(__dirname, './public')));
-
 // Middleware
-app.use(morgan('dev'));
+app.use(express.static(path.join(__dirname, './public')));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+app.use(morgan('dev'));
 app.use(cors());
 
 // Import API routes
-const investmentFeesRoutes = require('./routes/investmentFees');
-const educationROIRoutes = require('./routes/educationROI');
-const investmentVehicleRoutes = require('./routes/investmentVehicle');
-const rentOrBuyRoutes = require('./routes/rentOrBuy');
+const investmentFeesRoute = require('./routes/investmentFeesRoute');
+const educationROIRoute = require('./routes/educationROIRoute');
+const investmentVehicleRoute = require('./routes/investmentVehicleRoute');
+const rentOrBuyRoute = require('./routes/rentOrBuyRoute');
 
 // Mount API routes
-app.use('/api/investment-fees', investmentFeesRoutes());
-app.use('/api/education-roi', educationROIRoutes());
-app.use('/api/investment-vehicle', investmentVehicleRoutes());
-app.use('/api/rent-or-buy', rentOrBuyRoutes());
+app.use('/api/investment-fees', investmentFeesRoute());
+app.use('/api/education-roi', educationROIRoute());
+app.use('/api/investment-vehicle', investmentVehicleRoute());
+app.use('/api/rent-or-buy', rentOrBuyRoute());
 
 // Start server
 app.listen(PORT, () => {

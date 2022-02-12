@@ -1,11 +1,8 @@
 /**
- * Routing logic for education return on invesment calculation
+ * Controller logic for educationROI calculator.
  */
 
-const express = require('express');
-const router = express.Router();
-
-const formatNumToDollarString = require('../lib/formatNumToDollarString');
+const formatNumToDollarString = require('../helpers/formatNumToDollarString');
 
 const educationROIValidator = (reqBody) => {
   const {
@@ -57,8 +54,9 @@ const educationROIValidator = (reqBody) => {
   return result;
 };
 
-module.exports = function () {
-  router.post('/', (req, res) => {
+module.exports = {
+  // Calculate data
+  calculateData: function (req, res) {
     // Validate
     const { isValid, errorMessages } = educationROIValidator(req.body);
     if (!isValid) {
@@ -97,6 +95,5 @@ module.exports = function () {
       returnOnInvestmentPercentage: `${returnOnInvestmentPercentage}%`,
       yearsForEducationToPayForItself: `${yearsForEducationToPayForItself} Years`,
     });
-  });
-  return router;
+  },
 };

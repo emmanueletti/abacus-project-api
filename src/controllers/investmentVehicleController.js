@@ -1,12 +1,10 @@
 /**
- * Routing logic for TFSA vs. RRSP decision maker
+ * Controller logic for investment vehicle decision maker
  */
 
-const express = require('express');
-const router = express.Router();
+const formatNumToDollarString = require('../helpers/formatNumToDollarString');
 
-const { FEDERAL_TAX_BRACKET_TIER_1 } = require('../lib/constants');
-const formatNumToDollarString = require('../lib/formatNumToDollarString');
+const FEDERAL_TAX_BRACKET_TIER_1 = 50197;
 
 const investmentVehicleValidator = ({
   annualIncome,
@@ -40,8 +38,8 @@ const investmentVehicleValidator = ({
   return result;
 };
 
-module.exports = function () {
-  router.post('/', (req, res) => {
+module.exports = {
+  calculateData: (req, res) => {
     // Validate
     const { isValid, errorMessages } = investmentVehicleValidator(req.body);
     if (!isValid) {
@@ -87,7 +85,5 @@ module.exports = function () {
       investmentVehicle: 'TFSA',
       amountToContribute: 'Till contribution room is maxed',
     });
-  });
-
-  return router;
+  },
 };

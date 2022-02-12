@@ -22,10 +22,9 @@ form.addEventListener('submit', (e) => {
   })
     .then((result) => result.json())
     .then((data) => {
-      if (data.error) {
-        preEl.innerText = JSON.stringify(data, null, 2);
-        return;
+      if (!data.error) {
+        summary.textContent = `If you can rent a suitable home that meets your needs for less than ${data.rentEquivalent}, then renting might be better.`;
       }
-      summary.textContent = `If you can rent a suitable home that meets your needs for less than ${data.rentEquivalent}, then renting might be better.`;
+      preEl.innerText = JSON.stringify(data, null, 2);
     });
 });

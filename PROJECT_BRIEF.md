@@ -42,6 +42,6 @@ An API of personal finance calculators.
 [x] helpful error handling
 [x] show banner of error message in view
 [x] documentation
+[x] refactor and cleanup (MVC structure)
 [] TESTS!
 [] scalability (rate limiting, load balancing)
-[] cleanup (MVC structure)

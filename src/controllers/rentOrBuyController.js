@@ -1,11 +1,8 @@
 /**
- * Routing logic for Renting vs. Buying decision maker
+ * Controller logic for Renting vs. Buying decision maker
  */
 
-const express = require('express');
-const router = express.Router();
-
-const formatNumToDollarString = require('../lib/formatNumToDollarString');
+const formatNumToDollarString = require('../helpers/formatNumToDollarString');
 
 const rentOrBuyValidator = ({ homePrice, isTFSAorRRSPMaxed }) => {
   const result = {
@@ -28,8 +25,8 @@ const rentOrBuyValidator = ({ homePrice, isTFSAorRRSPMaxed }) => {
   return result;
 };
 
-module.exports = function () {
-  router.post('/', (req, res) => {
+module.exports = {
+  calculateData: (req, res) => {
     // Validate
     const { isValid, errorMessages } = rentOrBuyValidator(req.body);
     if (!isValid) {
@@ -48,7 +45,5 @@ module.exports = function () {
       rentEquivalent: formatNumToDollarString(rentEquivalent),
       referenceURL: 'https://www.youtube.com/watch?v=Uwl3-jBNEd4',
     });
-  });
-
-  return router;
+  },
 };

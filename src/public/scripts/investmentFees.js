@@ -35,13 +35,13 @@ form.addEventListener('submit', (e) => {
   })
     .then((result) => result.json())
     .then((data) => {
-      if (data.error) {
-        preEl.innerText = JSON.stringify(data, null, 2);
-        return;
+      if (!data.error) {
+        finalAmoutWithoutFees.textContent =
+          data.finalInvestmentAmountWithOutFees;
+        finalAmoutWithFees.textContent = data.finalInvestmentAmountWithFees;
+        amountLostToFees.textContent = data.amountLostToFees;
+        percentageLostToFees.textContent = data.percentageLostToFees;
       }
-      finalAmoutWithoutFees.textContent = data.finalInvestmentAmountWithOutFees;
-      finalAmoutWithFees.textContent = data.finalInvestmentAmountWithFees;
-      amountLostToFees.textContent = data.amountLostToFees;
-      percentageLostToFees.textContent = data.percentageLostToFees;
+      preEl.innerText = JSON.stringify(data, null, 2);
     });
 });
