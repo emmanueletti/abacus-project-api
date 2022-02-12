@@ -38,10 +38,10 @@ An API of personal finance calculators.
 
 [x] security (POSTS vs GET)
 [x] api validation
-[] remove html error handling from form to show error messages
-[] helpful error handling
-[] show banner of error message in view
-[] TESTS!
+[x] remove html error handling from form to show error messages
+[x] helpful error handling
+[x] show banner of error message in view
 [x] documentation
+[] TESTS!
 [] scalability (rate limiting, load balancing)
 [] cleanup (MVC structure)
