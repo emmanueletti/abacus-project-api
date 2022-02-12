@@ -4,31 +4,35 @@
 
 const formatNumToDollarString = require('../helpers/formatNumToDollarString');
 
-const rentOrBuyValidator = ({ homePrice, isTFSAorRRSPMaxed }) => {
-  const result = {
-    isValid: true,
-    errorMessages: [],
-  };
-
-  // validate number types
-  if (isNaN(homePrice) || homePrice <= 0 || !homePrice) {
-    result.isValid = false;
-    result.errorMessages.push(`homePrice must be a number type greater than 0`);
-  }
-
-  // validate booleans
-  if (isTFSAorRRSPMaxed && typeof isTFSAorRRSPMaxed !== 'boolean') {
-    result.isValid = false;
-    result.errorMessages.push(`isTFSAorRRSPMaxed must be a boolean`);
-  }
-
-  return result;
-};
-
 module.exports = {
-  calculateData: (req, res) => {
+  _rentOrBuyValidator: function ({ homePrice, isTFSAorRRSPMaxed }) {
+    const result = {
+      isValid: true,
+      errorMessages: [],
+    };
+
+    // validate number types
+    if (isNaN(homePrice) || homePrice <= 0 || !homePrice) {
+      result.isValid = false;
+      result.errorMessages.push(
+        `homePrice must be a number type greater than 0`
+      );
+    }
+
+    // validate booleans
+    if (isTFSAorRRSPMaxed && typeof isTFSAorRRSPMaxed !== 'boolean') {
+      result.isValid = false;
+      result.errorMessages.push(`isTFSAorRRSPMaxed must be a boolean`);
+    }
+
+    return result;
+  },
+
+  rentOrBuyController: function (req, res) {
     // Validate
-    const { isValid, errorMessages } = rentOrBuyValidator(req.body);
+    const { isValid, errorMessages } = module.exports._rentOrBuyValidator(
+      req.body
+    );
     if (!isValid) {
       return res.status(400).json({ error: errorMessages });
     }

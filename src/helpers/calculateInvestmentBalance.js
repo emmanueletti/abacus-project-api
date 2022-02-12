@@ -1,6 +1,10 @@
 const NUM_TIMES_COMPOUNDED_PER_UNIT_TIME = 12;
 
 module.exports = function (...args) {
+  const areAllArgsNumbers = args.every((arg) => !isNaN(arg));
+
+  if (!areAllArgsNumbers) return null;
+
   const [
     principalInvestment,
     annualInterestRate,
@@ -36,5 +40,5 @@ module.exports = function (...args) {
   const finalInvestmentAmount =
     compoundInterestForPrincipal + FutureValueOfSeries;
 
-  return finalInvestmentAmount;
+  return Math.round(finalInvestmentAmount);
 };

@@ -5,10 +5,12 @@
 const express = require('express');
 const router = express.Router();
 
-const { calculateData } = require('../controllers/investmentFeesController');
+const {
+  investmentFeesController,
+} = require('../controllers/investmentFeesController');
 
 module.exports = function () {
-  router.post('/', calculateData);
+  router.post('/', investmentFeesController);
 
   return router;
 };

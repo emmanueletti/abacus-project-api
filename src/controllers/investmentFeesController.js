@@ -5,50 +5,53 @@
 const formatNumToDollarString = require('../helpers/formatNumToDollarString');
 const calculateInvestmentBalance = require('../helpers/calculateInvestmentBalance');
 
-const investmentFeesValidator = (reqBody) => {
-  const result = {
-    isValid: true,
-    errorMessages: [],
-  };
-
-  const values = Object.values(reqBody).filter((value) => value);
-  if (!values.length) {
-    result.isValid = false;
-    result.errorMessages.push(`Body data can not be empty`);
-  }
-
-  // validate number types
-  Object.keys(reqBody).forEach((key) => {
-    const value = reqBody[key];
-    if (isNaN(value) || value < 0) {
-      result.isValid = false;
-      result.errorMessages.push(`${key} must be a number type greater than 0`);
-    }
-  });
-
-  // validate ages
-  if (reqBody.startingAge > reqBody.retirementAge) {
-    result.isValid = false;
-    result.errorMessages.push(
-      `startingAge can not be greater than retirementAge`
-    );
-  }
-
-  // validate management expense ratio
-  if (reqBody.managementExpenseRatio > 20) {
-    result.isValid = false;
-    result.errorMessages.push(
-      `managementExpenseRatio can not be greater than 20`
-    );
-  }
-
-  return result;
-};
-
 module.exports = {
-  calculateData: (req, res) => {
+  _investmentFeesValidator: (reqBody) => {
+    const result = {
+      isValid: true,
+      errorMessages: [],
+    };
+
+    const values = Object.values(reqBody).filter((value) => value);
+    if (!values.length) {
+      result.isValid = false;
+      result.errorMessages.push(`Body data can not be empty`);
+    }
+
+    // validate number types
+    Object.keys(reqBody).forEach((key) => {
+      const value = reqBody[key];
+      if (isNaN(value) || value < 0) {
+        result.isValid = false;
+        result.errorMessages.push(
+          `${key} must be a number type greater than 0`
+        );
+      }
+    });
+
+    // validate ages
+    if (reqBody.startingAge > reqBody.retirementAge) {
+      result.isValid = false;
+      result.errorMessages.push(
+        `startingAge can not be greater than retirementAge`
+      );
+    }
+
+    // validate management expense ratio
+    if (reqBody.managementExpenseRatio > 20) {
+      result.isValid = false;
+      result.errorMessages.push(
+        `managementExpenseRatio can not be greater than 20`
+      );
+    }
+
+    return result;
+  },
+  investmentFeesController: (req, res) => {
     // Validate
-    const { isValid, errorMessages } = investmentFeesValidator(req.body);
+    const { isValid, errorMessages } = module.exports._investmentFeesValidator(
+      req.body
+    );
     if (!isValid) {
       return res.status(400).json({ error: errorMessages });
     }

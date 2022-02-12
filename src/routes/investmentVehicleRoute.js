@@ -5,10 +5,12 @@
 const express = require('express');
 const router = express.Router();
 
-const { calculateData } = require('../controllers/investmentVehicleController');
+const {
+  investmentVehicleController,
+} = require('../controllers/investmentVehicleController');
 
 module.exports = function () {
-  router.post('/', calculateData);
+  router.post('/', investmentVehicleController);
 
   return router;
 };

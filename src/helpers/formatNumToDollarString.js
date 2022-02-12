@@ -1,5 +1,5 @@
 module.exports = (num) => {
-  if (isNaN(num)) return;
+  if (isNaN(num)) return null;
 
   const roundedNum = Math.round(num);
 
