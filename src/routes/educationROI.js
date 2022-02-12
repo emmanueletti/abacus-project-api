@@ -7,8 +7,58 @@ const router = express.Router();
 
 const formatNumToDollarString = require('../lib/formatNumToDollarString');
 
+const educationROIValidator = (reqBody) => {
+  const {
+    programLengthYears,
+    annualTuition,
+    currentSalary,
+    medianExpectedSalary,
+    isPartTime,
+  } = reqBody;
+
+  const result = {
+    isValid: true,
+    errorMessages: [],
+  };
+
+  // validate number types
+  Object.keys({
+    programLengthYears,
+    annualTuition,
+    currentSalary,
+    medianExpectedSalary,
+  }).forEach((key) => {
+    const value = reqBody[key];
+    if (isNaN(value) || value < 0) {
+      result.isValid = false;
+      result.errorMessages.push(`${key} must be a number type greater than 0`);
+    }
+  });
+
+  if (medianExpectedSalary < currentSalary) {
+    result.isValid = false;
+    result.errorMessages.push(
+      `medianExpectedSalary must be greater than or equal to currentSalary`
+    );
+  }
+
+  // validate bool
+  if (isPartTime && typeof isPartTime !== 'boolean') {
+    result.isValid = false;
+    result.errorMessages.push(`isPartTime must be a boolean`);
+  }
+
+  return result;
+};
+
 module.exports = function () {
   router.post('/', (req, res) => {
+    // Validate
+    const { isValid, errorMessages } = educationROIValidator(req.body);
+    if (!isValid) {
+      return res.status(400).json({ error: errorMessages });
+    }
+
     const {
       programLengthYears,
       annualTuition,
@@ -35,8 +85,6 @@ module.exports = function () {
     const yearsForEducationToPayForItself = (
       educationCost / increaseInSalary
     ).toFixed(1);
-
-    console.log(yearsForEducationToPayForItself);
 
     res.json({
       increaseInSalary: formatNumToDollarString(increaseInSalary),

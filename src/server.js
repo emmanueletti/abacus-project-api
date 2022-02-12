@@ -9,8 +9,8 @@ const app = express();
 const PORT = process.env.PORT || 8080;
 
 // EJS
-app.set('view engine', 'ejs');
-app.set('views', path.join(__dirname, './views'));
+// app.set('view engine', 'ejs');
+// app.set('views', path.join(__dirname, './views'));
 app.use(express.static(path.join(__dirname, './public')));
 
 // Middleware
@@ -19,7 +19,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cors());
 
-// Import routes
+// Import API routes
 const investmentFeesRoutes = require('./routes/investmentFees');
 const educationROIRoutes = require('./routes/educationROI');
 const investmentVehicleRoutes = require('./routes/investmentVehicle');
@@ -30,24 +30,6 @@ app.use('/api/investment-fees', investmentFeesRoutes());
 app.use('/api/education-roi', educationROIRoutes());
 app.use('/api/investment-vehicle', investmentVehicleRoutes());
 app.use('/api/rent-or-buy', rentOrBuyRoutes());
-
-// View Routes
-app.get('/investment-fees', (req, res) => {
-  res.render('investment-fees.ejs');
-});
-app.get('/education-roi', (req, res) => {
-  res.render('education-roi.ejs');
-});
-app.get('/investment-vehicle', (req, res) => {
-  res.render('investment-vehicle.ejs');
-});
-app.get('/rent-or-buy', (req, res) => {
-  res.render('rent-or-buy.ejs');
-});
-
-app.get('/', (req, res) => {
-  res.render('index');
-});
 
 // Start server
 app.listen(PORT, () => {

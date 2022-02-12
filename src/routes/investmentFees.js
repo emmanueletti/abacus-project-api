@@ -8,15 +8,15 @@ const router = express.Router();
 const calculateInvestmentBalance = require('../lib/calculateInvestmentBalance');
 const formatNumToDollarString = require('../lib/formatNumToDollarString');
 
-const investmentFeesValidator = (args) => {
+const investmentFeesValidator = (reqBody) => {
   const result = {
     isValid: true,
     errorMessages: [],
   };
 
   // validate number types
-  Object.keys(args).forEach((key) => {
-    const value = args[key];
+  Object.keys(reqBody).forEach((key) => {
+    const value = reqBody[key];
     if (isNaN(value) || value < 0) {
       result.isValid = false;
       result.errorMessages.push(`${key} must be a number type greater than 0`);
@@ -24,7 +24,7 @@ const investmentFeesValidator = (args) => {
   });
 
   // validate ages
-  if (args.startingAge > args.retirementAge) {
+  if (reqBody.startingAge > reqBody.retirementAge) {
     result.isValid = false;
     result.errorMessages.push(
       `startingAge can not be greater than retirementAge`
@@ -32,7 +32,7 @@ const investmentFeesValidator = (args) => {
   }
 
   // validate management expense ratio
-  if (args.managementExpenseRatio > 20) {
+  if (reqBody.managementExpenseRatio > 20) {
     result.isValid = false;
     result.errorMessages.push(
       `managementExpenseRatio can not be greater than 20`
@@ -44,6 +44,12 @@ const investmentFeesValidator = (args) => {
 
 module.exports = function () {
   router.post('/', (req, res) => {
+    // Validate
+    const { isValid, errorMessages } = investmentFeesValidator(req.body);
+    if (!isValid) {
+      return res.status(400).json({ error: errorMessages });
+    }
+
     const {
       principalInvestment,
       annualInterestRate,
@@ -52,13 +58,6 @@ module.exports = function () {
       startingAge,
       retirementAge,
     } = req.body;
-
-    // Validate
-    const { isValid, errorMessages } = investmentFeesValidator(req.body);
-
-    if (!isValid) {
-      return res.status(400).json({ error: errorMessages });
-    }
 
     const totalInvestmentTime = retirementAge - startingAge;
 

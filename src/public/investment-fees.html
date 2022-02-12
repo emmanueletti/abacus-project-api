@@ -12,7 +12,36 @@
     <title>Abacus Project</title>
   </head>
   <body>
-    <%- include ('partials/_nav') %>
+    <!-- Nav -->
+    <header class="sans-serif">
+      <div class="header cover bg-left bg-center-l">
+        <div class="bg-black-80">
+          <nav class="dt w-100 mw8 center">
+            <div class="dtc w2 v-mid pa3">
+              <a
+                href="/"
+                class="dib w2 h2 pa1 ba grow-large border-box bg-gold"
+              >
+              </a>
+            </div>
+            <div class="dtc v-mid tr pa3">
+              <a
+                class="f6 fw4 hover-white no-underline white-70 dn dib-l pv2 ph3"
+                href="https://github.com/emmanueletti/abacus-project-api"
+                target="_blank"
+                >Github</a
+              >
+              <a
+                class="f6 fw4 hover-white no-underline white-70 dib ml2 pv2 ph3 ba"
+                href="https://github.com/emmanueletti/abacus-project-api/blob/main/DOCUMENTATION.md"
+                target="_blank"
+                >API Documentation</a
+              >
+            </div>
+          </nav>
+        </div>
+      </div>
+    </header>
 
     <main class="pv4 container">
       <!-- Results -->
@@ -130,7 +159,19 @@
       </form>
     </main>
 
+    <!-- Footer -->
+    <footer class="bg-near-black white-80 pv5 pv6-l ph4">
+      <p class="f6">
+        <span class="dib mr4 mr5-ns">Abacus Project</span>
+        <span class="link white-80" href="#"> Contact </span> /
+        <a
+          class="link white-80 hover-green"
+          href="https://www.emmanueletti.com/"
+          >Emmanuel Etti</a
+        >
+      </p>
+    </footer>
+
     <script src="/scripts/investmentFees.js"></script>
-    <%- include ('partials/_footer') %>
   </body>
 </html>

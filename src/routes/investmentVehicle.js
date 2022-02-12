@@ -8,8 +8,46 @@ const router = express.Router();
 const { FEDERAL_TAX_BRACKET_TIER_1 } = require('../lib/constants');
 const formatNumToDollarString = require('../lib/formatNumToDollarString');
 
+const investmentVehicleValidator = ({
+  annualIncome,
+  isTFSAContributionMaxed,
+  isRRSPContributionMaxed,
+}) => {
+  const result = {
+    isValid: true,
+    errorMessages: [],
+  };
+
+  // validate number types
+  if (isNaN(annualIncome) || annualIncome < 0) {
+    result.isValid = false;
+    result.errorMessages.push(
+      `annualIncome must be a number type greater than 0`
+    );
+  }
+
+  // validate booleans
+  if (isTFSAContributionMaxed && typeof isTFSAContributionMaxed !== 'boolean') {
+    result.isValid = false;
+    result.errorMessages.push(`isTFSAContributionMaxed must be a boolean`);
+  }
+
+  if (isRRSPContributionMaxed && typeof isRRSPContributionMaxed !== 'boolean') {
+    result.isValid = false;
+    result.errorMessages.push(`isRRSPContributionMaxed must be a boolean`);
+  }
+
+  return result;
+};
+
 module.exports = function () {
   router.post('/', (req, res) => {
+    // Validate
+    const { isValid, errorMessages } = investmentVehicleValidator(req.body);
+    if (!isValid) {
+      return res.status(400).json({ error: errorMessages });
+    }
+
     const { annualIncome, isTFSAContributionMaxed, isRRSPContributionMaxed } =
       req.body;
 

@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/tachyons@4.12.0/css/tachyons.min.css"
+    />
+    <link rel="stylesheet" href="/styles/index.css" />
+    <title>Abacus Project</title>
+  </head>
+  <body>
+    <!-- Full Header -->
+    <header class="sans-serif">
+      <div class="header cover bg-left bg-center-l">
+        <div class="bg-black-80 pb5 pb6-m pb7-l">
+          <nav class="dt w-100 mw8 center">
+            <div class="dtc w2 v-mid pa3">
+              <a
+                href="/"
+                class="dib w2 h2 pa1 ba grow-large border-box bg-gold"
+              >
+              </a>
+            </div>
+            <div class="dtc v-mid tr pa3">
+              <a
+                class="f6 fw4 hover-white no-underline white-70 dn dib-l pv2 ph3"
+                href="https://github.com/emmanueletti/abacus-project-api"
+                target="_blank"
+                >Github</a
+              >
+              <a
+                class="f6 fw4 hover-white no-underline white-70 dib ml2 pv2 ph3 ba"
+                href="https://github.com/emmanueletti/abacus-project-api/blob/main/DOCUMENTATION.md"
+                target="_blank"
+                >API Documentation</a
+              >
+            </div>
+          </nav>
+          <div class="tc-l mt4 mt5-m mt6-l ph3">
+            <h1 class="f2 f1-l fw2 white-90 mb0 lh-title">
+              Make Good Decisions
+            </h1>
+            <h2 class="fw1 f3 white-80 mt3 mb4">
+              Abacus Project is an API of personal finance calculators to help
+              everyday people make financial decisions that work for them.
+            </h2>
+            <a
+              class="f6 no-underline grow dib v-mid bg-blue white ba b--blue ph3 pv2 mb3"
+              href="#calculators"
+              >TRY IT OUT</a
+            >
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Calculator cards -->
+    <main id="calculators" class="pv4 container grid">
+      <a href="/investment-fees.html">
+        <div class="calculator-card">
+          <h2>Investment Fees</h2>
+          <p>What is your current portfolio costing you in fees.</p>
+        </div>
+      </a>
+
+      <a href="/education-roi.html">
+        <div class="calculator-card">
+          <h2>Education Return On Investment</h2>
+          <p>What returns can you expect from your (further) education.</p>
+        </div>
+      </a>
+
+      <a href="/investment-vehicle.html">
+        <div class="calculator-card">
+          <h2>TFSA vs. RRSP</h2>
+          <p>Which Investment vehicle should you prioritize.</p>
+        </div>
+      </a>
+
+      <a href="/rent-or-buy.html">
+        <div class="calculator-card">
+          <h2>Rent vs. Buy</h2>
+          <p>An oversimplified guide to the rent vs. buy decision.</p>
+        </div>
+      </a>
+    </main>
+    <!-- Footer -->
+    <footer class="bg-near-black white-80 pv5 pv6-l ph4">
+      <p class="f6">
+        <span class="dib mr4 mr5-ns">Abacus Project</span>
+        <span class="link white-80" href="#"> Contact </span> /
+        <a
+          class="link white-80 hover-green"
+          href="https://www.emmanueletti.com/"
+          >Emmanuel Etti</a
+        >
+      </p>
+    </footer>
+  </body>
+</html>
