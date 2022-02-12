@@ -3,6 +3,7 @@ const finalAmoutWithoutFees = document.getElementById('finalAmoutWithoutFees');
 const finalAmoutWithFees = document.getElementById('finalAmoutWithFees');
 const amountLostToFees = document.getElementById('amountLostToFees');
 const percentageLostToFees = document.getElementById('percentageLostToFees');
+const preEl = document.querySelector('pre');
 
 form.addEventListener('submit', (e) => {
   e.preventDefault();
@@ -34,6 +35,10 @@ form.addEventListener('submit', (e) => {
   })
     .then((result) => result.json())
     .then((data) => {
+      if (data.error) {
+        preEl.innerText = JSON.stringify(data, null, 2);
+        return;
+      }
       finalAmoutWithoutFees.textContent = data.finalInvestmentAmountWithOutFees;
       finalAmoutWithFees.textContent = data.finalInvestmentAmountWithFees;
       amountLostToFees.textContent = data.amountLostToFees;

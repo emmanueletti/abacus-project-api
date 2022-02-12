@@ -4,6 +4,7 @@ const returnOnInvestment = document.getElementById('returnOnInvestment');
 const yearsForEducationToPayForItself = document.getElementById(
   'yearsForEducationToPayForItself'
 );
+const preEl = document.querySelector('pre');
 
 form.addEventListener('submit', (e) => {
   e.preventDefault();
@@ -16,9 +17,6 @@ form.addEventListener('submit', (e) => {
   ] = Array.from(form).map((input) => input.value);
 
   const isPartTime = form[4];
-
-  console.log(form[4]);
-  console.log(isPartTime.checked);
 
   const data = {
     programLengthYears,
@@ -37,6 +35,10 @@ form.addEventListener('submit', (e) => {
   })
     .then((result) => result.json())
     .then((data) => {
+      if (data.error) {
+        preEl.innerText = JSON.stringify(data, null, 2);
+        return;
+      }
       increaseInSalary.textContent = data.increaseInSalary;
       returnOnInvestment.textContent = data.returnOnInvestmentPercentage;
       yearsForEducationToPayForItself.textContent =

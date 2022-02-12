@@ -19,7 +19,7 @@ const investmentVehicleValidator = ({
   };
 
   // validate number types
-  if (isNaN(annualIncome) || annualIncome < 0) {
+  if (isNaN(annualIncome) || annualIncome <= 0 || !annualIncome) {
     result.isValid = false;
     result.errorMessages.push(
       `annualIncome must be a number type greater than 0`

@@ -1,6 +1,7 @@
 const form = document.querySelector('form');
 const investmentVehicle = document.getElementById('investmentVehicle');
 const amountToContribute = document.getElementById('amountToContribute');
+const preEl = document.querySelector('pre');
 
 form.addEventListener('submit', (e) => {
   e.preventDefault();
@@ -24,6 +25,10 @@ form.addEventListener('submit', (e) => {
   })
     .then((result) => result.json())
     .then((data) => {
+      if (data.error) {
+        preEl.innerText = JSON.stringify(data, null, 2);
+        return;
+      }
       investmentVehicle.textContent = data.investmentVehicle;
       amountToContribute.textContent = data.amountToContribute;
     });

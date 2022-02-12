@@ -14,7 +14,7 @@ const rentOrBuyValidator = ({ homePrice, isTFSAorRRSPMaxed }) => {
   };
 
   // validate number types
-  if (isNaN(homePrice) || homePrice < 0) {
+  if (isNaN(homePrice) || homePrice <= 0 || !homePrice) {
     result.isValid = false;
     result.errorMessages.push(`homePrice must be a number type greater than 0`);
   }

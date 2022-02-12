@@ -1,5 +1,6 @@
 const form = document.querySelector('form');
 const summary = document.getElementById('summary');
+const preEl = document.querySelector('pre');
 
 form.addEventListener('submit', (e) => {
   e.preventDefault();
@@ -21,6 +22,10 @@ form.addEventListener('submit', (e) => {
   })
     .then((result) => result.json())
     .then((data) => {
+      if (data.error) {
+        preEl.innerText = JSON.stringify(data, null, 2);
+        return;
+      }
       summary.textContent = `If you can rent a suitable home that meets your needs for less than ${data.rentEquivalent}, then renting might be better.`;
     });
 });

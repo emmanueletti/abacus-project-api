@@ -14,6 +14,12 @@ const investmentFeesValidator = (reqBody) => {
     errorMessages: [],
   };
 
+  const values = Object.values(reqBody).filter((value) => value);
+  if (!values.length) {
+    result.isValid = false;
+    result.errorMessages.push(`Body data can not be empty`);
+  }
+
   // validate number types
   Object.keys(reqBody).forEach((key) => {
     const value = reqBody[key];
