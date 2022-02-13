@@ -5,7 +5,7 @@
 const express = require('express');
 const router = express.Router();
 
-const { rentOrBuyController } = require('../controllers/rentOrBuyController');
+const rentOrBuyController = require('../controllers/rentOrBuyController');
 
 module.exports = function () {
   router.post('/', rentOrBuyController);

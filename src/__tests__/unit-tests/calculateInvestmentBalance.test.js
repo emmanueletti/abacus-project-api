@@ -1,6 +1,6 @@
 // calculation results validated against https://smartasset.com/investing/investment-calculator
 
-const calculateInvestmentBalance = require('../helpers/calculateInvestmentBalance');
+const calculateInvestmentBalance = require('../../helpers/calculateInvestmentBalance');
 
 describe('calculateInvestmentBalance', () => {
   let principalInvestment = 5000;

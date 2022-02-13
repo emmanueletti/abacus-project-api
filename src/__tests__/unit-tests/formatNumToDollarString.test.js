@@ -1,4 +1,4 @@
-const formatNumToDollarString = require('../helpers/formatNumToDollarString');
+const formatNumToDollarString = require('../../helpers/formatNumToDollarString');
 
 describe('formatNumToDollarString', () => {
   test('returns null if input is not a number', () => {

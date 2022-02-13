@@ -5,9 +5,7 @@
 const express = require('express');
 const router = express.Router();
 
-const {
-  investmentFeesController,
-} = require('../controllers/investmentFeesController');
+const investmentFeesController = require('../controllers/investmentFeesController');
 
 module.exports = function () {
   router.post('/', investmentFeesController);

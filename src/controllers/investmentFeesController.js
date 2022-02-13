@@ -5,99 +5,94 @@
 const formatNumToDollarString = require('../helpers/formatNumToDollarString');
 const calculateInvestmentBalance = require('../helpers/calculateInvestmentBalance');
 
-module.exports = {
-  _investmentFeesValidator: (reqBody) => {
-    const result = {
-      isValid: true,
-      errorMessages: [],
-    };
+const investmentFeesValidator = (reqBody) => {
+  const result = {
+    isValid: true,
+    errorMessages: [],
+  };
 
-    const values = Object.values(reqBody).filter((value) => value);
-    if (!values.length) {
+  const values = Object.values(reqBody).filter((value) => value);
+  if (!values.length) {
+    result.isValid = false;
+    result.errorMessages.push(`Body data can not be empty`);
+  }
+
+  // validate number types
+  Object.keys(reqBody).forEach((key) => {
+    const value = reqBody[key];
+    if (isNaN(value) || value < 0) {
       result.isValid = false;
-      result.errorMessages.push(`Body data can not be empty`);
+      result.errorMessages.push(`${key} must be a number type greater than 0`);
     }
+  });
 
-    // validate number types
-    Object.keys(reqBody).forEach((key) => {
-      const value = reqBody[key];
-      if (isNaN(value) || value < 0) {
-        result.isValid = false;
-        result.errorMessages.push(
-          `${key} must be a number type greater than 0`
-        );
-      }
-    });
-
-    // validate ages
-    if (reqBody.startingAge > reqBody.retirementAge) {
-      result.isValid = false;
-      result.errorMessages.push(
-        `startingAge can not be greater than retirementAge`
-      );
-    }
-
-    // validate management expense ratio
-    if (reqBody.managementExpenseRatio > 20) {
-      result.isValid = false;
-      result.errorMessages.push(
-        `managementExpenseRatio can not be greater than 20`
-      );
-    }
-
-    return result;
-  },
-  investmentFeesController: (req, res) => {
-    // Validate
-    const { isValid, errorMessages } = module.exports._investmentFeesValidator(
-      req.body
+  // validate ages
+  if (reqBody.startingAge > reqBody.retirementAge) {
+    result.isValid = false;
+    result.errorMessages.push(
+      `startingAge can not be greater than retirementAge`
     );
-    if (!isValid) {
-      return res.status(400).json({ error: errorMessages });
-    }
+  }
 
-    const {
-      principalInvestment,
-      annualInterestRate,
-      monthlyContributions,
-      managementExpenseRatio,
-      startingAge,
-      retirementAge,
-    } = req.body;
-
-    const totalInvestmentTime = retirementAge - startingAge;
-
-    const finalInvestmentAmountWithFees = calculateInvestmentBalance(
-      principalInvestment,
-      annualInterestRate - managementExpenseRatio,
-      monthlyContributions,
-      totalInvestmentTime
+  // validate management expense ratio
+  if (reqBody.managementExpenseRatio > 20) {
+    result.isValid = false;
+    result.errorMessages.push(
+      `managementExpenseRatio can not be greater than 20`
     );
+  }
 
-    const finalInvestmentAmountWithOutFees = calculateInvestmentBalance(
-      principalInvestment,
-      annualInterestRate,
-      monthlyContributions,
-      totalInvestmentTime
-    );
+  return result;
+};
 
-    const amountLostToFees =
-      finalInvestmentAmountWithOutFees - finalInvestmentAmountWithFees;
+// Controller
+module.exports = (req, res) => {
+  const { isValid, errorMessages } = investmentFeesValidator(req.body);
+  if (!isValid) {
+    return res.status(400).json({ error: errorMessages });
+  }
 
-    const percentageLostToFees = `${(
-      (amountLostToFees / finalInvestmentAmountWithOutFees) *
-      100
-    ).toFixed(2)}%`;
+  const {
+    principalInvestment,
+    annualInterestRate,
+    monthlyContributions,
+    managementExpenseRatio,
+    startingAge,
+    retirementAge,
+  } = req.body;
 
-    res.json({
-      finalInvestmentAmountWithOutFees: formatNumToDollarString(
-        finalInvestmentAmountWithOutFees
-      ),
-      finalInvestmentAmountWithFees: formatNumToDollarString(
-        finalInvestmentAmountWithFees
-      ),
-      amountLostToFees: formatNumToDollarString(amountLostToFees),
-      percentageLostToFees,
-    });
-  },
+  const totalInvestmentTime = retirementAge - startingAge;
+
+  const finalInvestmentAmountWithFees = calculateInvestmentBalance(
+    principalInvestment,
+    annualInterestRate - managementExpenseRatio,
+    monthlyContributions,
+    totalInvestmentTime
+  );
+
+  const finalInvestmentAmountWithOutFees = calculateInvestmentBalance(
+    principalInvestment,
+    annualInterestRate,
+    monthlyContributions,
+    totalInvestmentTime
+  );
+
+  const amountLostToFees =
+    finalInvestmentAmountWithOutFees - finalInvestmentAmountWithFees;
+
+  const percentageLostToFees = `${(
+    (amountLostToFees / finalInvestmentAmountWithOutFees) *
+    100
+  ).toFixed(2)}%`;
+
+  res.json({
+    finalInvestmentAmountWithOutFees: formatNumToDollarString(
+      finalInvestmentAmountWithOutFees
+    ),
+    finalInvestmentAmountWithFees: formatNumToDollarString(
+      finalInvestmentAmountWithFees
+    ),
+    amountLostToFees: formatNumToDollarString(amountLostToFees),
+    percentageLostToFees,
+  });
 };

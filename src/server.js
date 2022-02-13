@@ -6,7 +6,6 @@ const morgan = require('morgan');
 var cors = require('cors');
 
 const app = express();
-const PORT = process.env.PORT || 8080;
 
 // Middleware
 app.use(express.static(path.join(__dirname, './public')));
@@ -27,7 +26,4 @@ app.use('/api/education-roi', educationROIRoute());
 app.use('/api/investment-vehicle', investmentVehicleRoute());
 app.use('/api/rent-or-buy', rentOrBuyRoute());
 
-// Start server
-app.listen(PORT, () => {
-  console.log(`Abacus Project API listening on port ${PORT}`);
-});
+module.exports = app;

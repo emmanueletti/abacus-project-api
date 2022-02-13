@@ -4,99 +4,93 @@
 
 const formatNumToDollarString = require('../helpers/formatNumToDollarString');
 
-module.exports = {
-  _educationROIValidator: (reqBody) => {
-    const result = {
-      isValid: true,
-      errorMessages: [],
-    };
+const educationROIValidator = (reqBody) => {
+  const result = {
+    isValid: true,
+    errorMessages: [],
+  };
 
-    const values = Object.values(reqBody).filter((value) => value);
-    if (!values.length) {
+  const values = Object.values(reqBody).filter((value) => value);
+  if (!values.length) {
+    result.isValid = false;
+    result.errorMessages.push(`Body data can not be empty`);
+  }
+
+  const {
+    programLengthYears,
+    annualTuition,
+    currentSalary,
+    medianExpectedSalary,
+    isPartTime,
+  } = reqBody;
+
+  // validate number types
+  Object.keys({
+    programLengthYears,
+    annualTuition,
+    currentSalary,
+    medianExpectedSalary,
+  }).forEach((key) => {
+    const value = reqBody[key];
+    if (isNaN(value) || value < 0) {
       result.isValid = false;
-      result.errorMessages.push(`Body data can not be empty`);
+      result.errorMessages.push(`${key} must be a number type greater than 0`);
     }
+  });
 
-    const {
-      programLengthYears,
-      annualTuition,
-      currentSalary,
-      medianExpectedSalary,
-      isPartTime,
-    } = reqBody;
-
-    // validate number types
-    Object.keys({
-      programLengthYears,
-      annualTuition,
-      currentSalary,
-      medianExpectedSalary,
-    }).forEach((key) => {
-      const value = reqBody[key];
-      if (isNaN(value) || value < 0) {
-        result.isValid = false;
-        result.errorMessages.push(
-          `${key} must be a number type greater than 0`
-        );
-      }
-    });
-
-    if (medianExpectedSalary < currentSalary) {
-      result.isValid = false;
-      result.errorMessages.push(
-        `medianExpectedSalary must be greater than or equal to currentSalary`
-      );
-    }
-
-    // validate bool
-    if (isPartTime && typeof isPartTime !== 'boolean') {
-      result.isValid = false;
-      result.errorMessages.push(`isPartTime must be a boolean`);
-    }
-
-    return result;
-  },
-
-  educationROIController: function (req, res) {
-    // Validate
-    const { isValid, errorMessages } = module.exports._educationROIValidator(
-      req.body
+  if (medianExpectedSalary < currentSalary) {
+    result.isValid = false;
+    result.errorMessages.push(
+      `medianExpectedSalary must be greater than or equal to currentSalary`
     );
-    if (!isValid) {
-      return res.status(400).json({ error: errorMessages });
-    }
+  }
 
-    const {
-      programLengthYears,
-      annualTuition,
-      currentSalary,
-      medianExpectedSalary,
-      isPartTime,
-    } = req.body;
+  // validate bool
+  if (isPartTime && typeof isPartTime !== 'boolean') {
+    result.isValid = false;
+    result.errorMessages.push(`isPartTime must be a boolean`);
+  }
 
-    let educationCost = programLengthYears * annualTuition;
-    let lossOfIncome = currentSalary * programLengthYears;
-    educationCost = programLengthYears * annualTuition + lossOfIncome;
+  return result;
+};
 
-    educationCost = isPartTime
-      ? programLengthYears * annualTuition + lossOfIncome * 0.66
-      : programLengthYears * annualTuition + lossOfIncome;
+// Controller
+module.exports = (req, res) => {
+  const { isValid, errorMessages } = educationROIValidator(req.body);
+  if (!isValid) {
+    return res.status(400).json({ error: errorMessages });
+  }
 
-    const increaseInSalary = medianExpectedSalary - currentSalary;
+  const {
+    programLengthYears,
+    annualTuition,
+    currentSalary,
+    medianExpectedSalary,
+    isPartTime,
+  } = req.body;
 
-    const returnOnInvestmentPercentage = (
-      (increaseInSalary / educationCost) *
-      100
-    ).toFixed(1);
+  let educationCost = programLengthYears * annualTuition;
+  let lossOfIncome = currentSalary * programLengthYears;
+  educationCost = programLengthYears * annualTuition + lossOfIncome;
 
-    const yearsForEducationToPayForItself = (
-      educationCost / increaseInSalary
-    ).toFixed(1);
+  educationCost = isPartTime
+    ? programLengthYears * annualTuition + lossOfIncome * 0.66
+    : programLengthYears * annualTuition + lossOfIncome;
 
-    res.json({
-      increaseInSalary: formatNumToDollarString(increaseInSalary),
-      returnOnInvestmentPercentage: `${returnOnInvestmentPercentage}%`,
-      yearsForEducationToPayForItself: `${yearsForEducationToPayForItself} Years`,
-    });
-  },
+  const increaseInSalary = medianExpectedSalary - currentSalary;
+
+  const returnOnInvestmentPercentage = (
+    (increaseInSalary / educationCost) *
+    100
+  ).toFixed(1);
+
+  const yearsForEducationToPayForItself = (
+    educationCost / increaseInSalary
+  ).toFixed(1);
+
+  res.json({
+    increaseInSalary: formatNumToDollarString(increaseInSalary),
+    returnOnInvestmentPercentage: `${returnOnInvestmentPercentage}%`,
+    yearsForEducationToPayForItself: `${yearsForEducationToPayForItself} Years`,
+  });
 };
