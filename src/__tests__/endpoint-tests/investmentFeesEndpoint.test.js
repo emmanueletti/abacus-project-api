@@ -58,6 +58,7 @@ describe('Investment Fees endpoint', () => {
     expect(res.statusCode).toEqual(400);
     expect(res.body.error).toBeTruthy();
   });
+
   test('should return error when annual interest rate is not number', async () => {
     const data = {
       ...correctData,
@@ -75,6 +76,19 @@ describe('Investment Fees endpoint', () => {
     const data = {
       ...correctData,
       annualInterestRate: -2.2,
+    };
+    const res = await request(server)
+      .post('/api/investment-fees')
+      .set('Content-type', 'application/json')
+      .send(data);
+    expect(res.statusCode).toEqual(400);
+    expect(res.body.error).toBeTruthy();
+  });
+
+  test('should return error when annual interest rate is greater than 10', async () => {
+    const data = {
+      ...correctData,
+      annualInterestRate: 11,
     };
     const res = await request(server)
       .post('/api/investment-fees')

@@ -34,6 +34,12 @@ const investmentFeesValidator = (reqBody) => {
     );
   }
 
+  // validate interest rate
+  if (reqBody.annualInterestRate > 10) {
+    result.isValid = false;
+    result.errorMessages.push(`annualInterestRate can not be greater than 10`);
+  }
+
   // validate management expense ratio
   if (reqBody.managementExpenseRatio > 20) {
     result.isValid = false;
