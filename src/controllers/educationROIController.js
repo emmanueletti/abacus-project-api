@@ -56,41 +56,45 @@ const educationROIValidator = (reqBody) => {
 
 // Controller
 module.exports = (req, res) => {
-  const { isValid, errorMessages } = educationROIValidator(req.body);
-  if (!isValid) {
-    return res.status(400).json({ error: errorMessages });
+  try {
+    const { isValid, errorMessages } = educationROIValidator(req.body);
+    if (!isValid) {
+      return res.status(400).json({ error: errorMessages });
+    }
+
+    const {
+      programLengthYears,
+      annualTuition,
+      currentSalary,
+      medianExpectedSalary,
+      isPartTime,
+    } = req.body;
+
+    let educationCost = programLengthYears * annualTuition;
+    let lossOfIncome = currentSalary * programLengthYears;
+    educationCost = programLengthYears * annualTuition + lossOfIncome;
+
+    educationCost = isPartTime
+      ? programLengthYears * annualTuition + lossOfIncome * 0.66
+      : programLengthYears * annualTuition + lossOfIncome;
+
+    const increaseInSalary = medianExpectedSalary - currentSalary;
+
+    const returnOnInvestmentPercentage = (
+      (increaseInSalary / educationCost) *
+      100
+    ).toFixed(1);
+
+    const yearsForEducationToPayForItself = (
+      educationCost / increaseInSalary
+    ).toFixed(1);
+
+    return res.json({
+      increaseInSalary: formatNumToDollarString(increaseInSalary),
+      returnOnInvestmentPercentage: `${returnOnInvestmentPercentage}%`,
+      yearsForEducationToPayForItself: `${yearsForEducationToPayForItself} Years`,
+    });
+  } catch (error) {
+    return res.status(500).json({ error: 'something went wrong' });
   }
-
-  const {
-    programLengthYears,
-    annualTuition,
-    currentSalary,
-    medianExpectedSalary,
-    isPartTime,
-  } = req.body;
-
-  let educationCost = programLengthYears * annualTuition;
-  let lossOfIncome = currentSalary * programLengthYears;
-  educationCost = programLengthYears * annualTuition + lossOfIncome;
-
-  educationCost = isPartTime
-    ? programLengthYears * annualTuition + lossOfIncome * 0.66
-    : programLengthYears * annualTuition + lossOfIncome;
-
-  const increaseInSalary = medianExpectedSalary - currentSalary;
-
-  const returnOnInvestmentPercentage = (
-    (increaseInSalary / educationCost) *
-    100
-  ).toFixed(1);
-
-  const yearsForEducationToPayForItself = (
-    educationCost / increaseInSalary
-  ).toFixed(1);
-
-  res.json({
-    increaseInSalary: formatNumToDollarString(increaseInSalary),
-    returnOnInvestmentPercentage: `${returnOnInvestmentPercentage}%`,
-    yearsForEducationToPayForItself: `${yearsForEducationToPayForItself} Years`,
-  });
 };

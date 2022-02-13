@@ -40,49 +40,52 @@ const investmentVehicleValidator = ({
 
 // Controller
 module.exports = (req, res) => {
-  // Validate
-  const { isValid, errorMessages } = investmentVehicleValidator(req.body);
-  if (!isValid) {
-    return res.status(400).json({ error: errorMessages });
-  }
+  try {
+    const { isValid, errorMessages } = investmentVehicleValidator(req.body);
+    if (!isValid) {
+      return res.status(400).json({ error: errorMessages });
+    }
 
-  const { annualIncome, isTFSAContributionMaxed, isRRSPContributionMaxed } =
-    req.body;
+    const { annualIncome, isTFSAContributionMaxed, isRRSPContributionMaxed } =
+      req.body;
 
-  if (annualIncome > FEDERAL_TAX_BRACKET_TIER_1 && !isRRSPContributionMaxed) {
-    const amountForRRSP = annualIncome - FEDERAL_TAX_BRACKET_TIER_1;
-    return res.json({
-      investmentVehicle: 'RRSP',
-      amountToContribute: `Contribute at most ${formatNumToDollarString(
-        amountForRRSP
-      )} without going past max RRSP contribution room`,
-    });
-  }
+    if (annualIncome > FEDERAL_TAX_BRACKET_TIER_1 && !isRRSPContributionMaxed) {
+      const amountForRRSP = annualIncome - FEDERAL_TAX_BRACKET_TIER_1;
+      return res.json({
+        investmentVehicle: 'RRSP',
+        amountToContribute: `Contribute at most ${formatNumToDollarString(
+          amountForRRSP
+        )} without going past max RRSP contribution room`,
+      });
+    }
 
-  if (isTFSAContributionMaxed && !isRRSPContributionMaxed) {
-    return res.json({
-      investmentVehicle: 'RRSP',
-      amountToContribute: 'till contribution room is maxed',
-    });
-  }
+    if (isTFSAContributionMaxed && !isRRSPContributionMaxed) {
+      return res.json({
+        investmentVehicle: 'RRSP',
+        amountToContribute: 'till contribution room is maxed',
+      });
+    }
 
-  if (!isTFSAContributionMaxed && isRRSPContributionMaxed) {
+    if (!isTFSAContributionMaxed && isRRSPContributionMaxed) {
+      return res.json({
+        investmentVehicle: 'TFSA',
+        amountToContribute: 'Till contribution room is maxed',
+      });
+    }
+
+    if (isTFSAContributionMaxed && isRRSPContributionMaxed) {
+      return res.json({
+        investmentVehicle:
+          'Non-Registered / Non-Tax Advantaged Investment Account',
+        amountToContribute: 'As much as possible',
+      });
+    }
+
     return res.json({
       investmentVehicle: 'TFSA',
       amountToContribute: 'Till contribution room is maxed',
     });
+  } catch (error) {
+    return res.status(500).json({ error: 'something went wrong' });
   }
-
-  if (isTFSAContributionMaxed && isRRSPContributionMaxed) {
-    return res.json({
-      investmentVehicle:
-        'Non-Registered / Non-Tax Advantaged Investment Account',
-      amountToContribute: 'As much as possible',
-    });
-  }
-
-  res.json({
-    investmentVehicle: 'TFSA',
-    amountToContribute: 'Till contribution room is maxed',
-  });
 };

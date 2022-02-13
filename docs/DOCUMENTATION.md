@@ -1,6 +1,6 @@
 # Abacus Project Documentation
 
-An API of personal finance calculators.
+An API of simple personal finance calculators.
 
 ## Table of Contents
 
@@ -68,12 +68,6 @@ fetch('/api/investment-fees', {
 400 Bad Requests
 ```
 
-**Validation failed**
-
-```
-Status: 422 Unprocessable Entity
-```
-
 [⬆️ Back To Top](#abacus-project)
 
 ## Education Return On Investment
@@ -132,12 +126,6 @@ fetch('/api/investment-fees', {
 400 Bad Requests
 ```
 
-**Validation failed**
-
-```
-Status: 422 Unprocessable Entity
-```
-
 [⬆️ Back To Top](#abacus-project)
 
 ## Investment Vehicle
@@ -191,12 +179,6 @@ fetch('/api/investment-fees', {
 400 Bad Requests
 ```
 
-**Validation failed**
-
-```
-Status: 422 Unprocessable Entity
-```
-
 [⬆️ Back To Top](#abacus-project)
 
 ## Rent or Buy
@@ -246,12 +228,6 @@ fetch('/api/investment-fees', {
 
 ```
 400 Bad Requests
-```
-
-**Validation failed**
-
-```
-Status: 422 Unprocessable Entity
 ```
 
 [⬆️ Back To Top](#abacus-project)

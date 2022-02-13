@@ -1,7 +1,5 @@
 # Abacus Project Documentation
 
-An API of personal finance calculators.
+An API of simple personal finance calculators.
 
-## Get Started
-
-## Dependencies
+[Live Link](https://abacus-project-etti.herokuapp.com/)

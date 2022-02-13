@@ -27,22 +27,25 @@ const rentOrBuyValidator = ({ homePrice, isTFSAorRRSPMaxed }) => {
 
 // Controller
 module.exports = (req, res) => {
-  // Validate
-  const { isValid, errorMessages } = rentOrBuyValidator(req.body);
-  if (!isValid) {
-    return res.status(400).json({ error: errorMessages });
+  try {
+    const { isValid, errorMessages } = rentOrBuyValidator(req.body);
+    if (!isValid) {
+      return res.status(400).json({ error: errorMessages });
+    }
+
+    const { homePrice, isTFSAorRRSPMaxed } = req.body;
+    const unrecoverableCostsMultiplier = isTFSAorRRSPMaxed ? 0.04 : 0.05;
+    const monthsInTheYear = 12;
+
+    const rentEquivalent = Math.round(
+      (homePrice * unrecoverableCostsMultiplier) / monthsInTheYear
+    );
+
+    return res.json({
+      rentEquivalent: formatNumToDollarString(rentEquivalent),
+      referenceURL: 'https://www.youtube.com/watch?v=Uwl3-jBNEd4',
+    });
+  } catch (error) {
+    return res.status(500).json({ error: 'something went wrong' });
   }
-
-  const { homePrice, isTFSAorRRSPMaxed } = req.body;
-  const unrecoverableCostsMultiplier = isTFSAorRRSPMaxed ? 0.04 : 0.05;
-  const monthsInTheYear = 12;
-
-  const rentEquivalent = Math.round(
-    (homePrice * unrecoverableCostsMultiplier) / monthsInTheYear
-  );
-
-  return res.json({
-    rentEquivalent: formatNumToDollarString(rentEquivalent),
-    referenceURL: 'https://www.youtube.com/watch?v=Uwl3-jBNEd4',
-  });
 };
