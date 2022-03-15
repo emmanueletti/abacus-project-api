@@ -1,5 +1,8 @@
 const NUM_TIMES_COMPOUNDED_PER_UNIT_TIME = 12;
 
+// Implementation of compound interest for principal and Future value of a series formula
+// https://www.thecalculatorsite.com/articles/finance/compound-interest-formula.php
+// A = P(1 + r/n)(nt)
 module.exports = function (...args) {
   const areAllArgsNumbers = args.every((arg) => !isNaN(arg));
 
@@ -11,10 +14,6 @@ module.exports = function (...args) {
     monthlyContributions,
     totalInvestmentTime,
   ] = args;
-
-  // Implementation of compound interest for principal and Future value of a series formula
-  // https://www.thecalculatorsite.com/articles/finance/compound-interest-formula.php
-  // A = P(1 + r/n)(nt)
 
   const annualInterestRateDeci = annualInterestRate / 100;
 
